@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class WhiskyController {
@@ -31,5 +31,14 @@ public class WhiskyController {
         }
         return new ResponseEntity<>(whiskyRepository.findAll(), HttpStatus.OK);
     }
+
+    // http://localhost:8080/whisky1?age=1&distillery=Talisker
+    
+    @GetMapping(value = "/whisky1")
+    public ResponseEntity<List<Whisky>> params(
+            @RequestParam Integer age, @RequestParam String distillery){
+        return new ResponseEntity<>(whiskyRepository.findByAgeAndDistilleryName(age, distillery), HttpStatus.OK);
+    }
+
 
 }
