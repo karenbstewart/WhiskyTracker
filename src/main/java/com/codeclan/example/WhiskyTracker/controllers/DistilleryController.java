@@ -18,12 +18,9 @@ public class DistilleryController {
     @Autowired
     DistilleryRepository distilleryRepository;
 
-//    @GetMapping(value = "/distillery")
-//    public ResponseEntity<List<Distillery>> getAllDistillery(){
-//
-//    }
+    // http://localhost:8080/distillery?region=Highland
 
-    @GetMapping(value = "/distillery")
+        @GetMapping(value = "/distillery")
     public ResponseEntity<List<Distillery>> findDistilleryByRegion(
             @RequestParam(name = "region", required = false) String region){
         if(region!=null){
@@ -32,11 +29,14 @@ public class DistilleryController {
         return new ResponseEntity<>(distilleryRepository.findAll(), HttpStatus.OK);
     }
 
+    //http://localhost:8080/distillery1?whiskyAge=12
+
     @GetMapping(value = "/distillery1")
     public ResponseEntity<List<Distillery>> findDistilleriesWith12YearOldWhiskies(
             @RequestParam(name = "whiskyAge") Integer age){
         return new ResponseEntity<>(distilleryRepository.findByWhiskiesAge(age), HttpStatus.OK);
     }
+
 
 
 }
