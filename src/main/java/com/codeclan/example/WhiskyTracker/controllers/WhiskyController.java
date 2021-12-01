@@ -33,11 +33,19 @@ public class WhiskyController {
     }
 
     // http://localhost:8080/whisky1?age=1&distillery=Talisker
-    
+
     @GetMapping(value = "/whisky1")
-    public ResponseEntity<List<Whisky>> params(
+    public ResponseEntity<List<Whisky>> findWhiskeyByAgeAndDistilleryName(
             @RequestParam Integer age, @RequestParam String distillery){
         return new ResponseEntity<>(whiskyRepository.findByAgeAndDistilleryName(age, distillery), HttpStatus.OK);
+    }
+
+    //http://localhost:8080/whisky2?distillery=Highland
+
+    @GetMapping(value = "/whisky2")
+    public ResponseEntity<List<Whisky>> findWhiskiesFromAParticularRegion(
+            @RequestParam String distillery){
+        return new ResponseEntity<>(whiskyRepository.findByDistilleryRegion(distillery), HttpStatus.OK);
     }
 
 
