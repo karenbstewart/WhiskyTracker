@@ -25,8 +25,11 @@ public class WhiskyController {
 
     @GetMapping(value = "/whisky")
     public ResponseEntity<List<Whisky>> findThatHaveAParticularYear(
-            @RequestParam(name="year") Integer name){
-        return new ResponseEntity<>(whiskyRepository.findByYear(name),HttpStatus.OK);
+            @RequestParam(name="year",required = false) Integer year){
+        if(year!= null) {
+            return new ResponseEntity<>(whiskyRepository.findByYear(year), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(whiskyRepository.findAll(), HttpStatus.OK);
     }
 
 }
