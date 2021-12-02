@@ -18,35 +18,49 @@ public class WhiskyController {
     @Autowired
     WhiskyRepository whiskyRepository;
 
-//    @GetMapping(value = "/whisky")
-//    public ResponseEntity<List<Whisky>> getAllWhiskies(){
-//        return new ResponseEntity<>(whiskyRepository.findAll(), HttpStatus.OK);
-//    }
-
     @GetMapping(value = "/whisky")
     public ResponseEntity<List<Whisky>> findThatHaveAParticularYear(
-            @RequestParam(name="year",required = false) Integer year){
-        if(year!= null) {
+            @RequestParam(name="year",required = false) Integer year,
+            @RequestParam(name="age",required = false) Integer age,
+            @RequestParam(name="distilleryName",required = false)  String distilleryName,
+            @RequestParam(name="distilleryRegion",required = false) String distilleryRegion){
+        if(year != null) {
             return new ResponseEntity<>(whiskyRepository.findByYear(year), HttpStatus.OK);
+        }
+        if(distilleryName !=null && age!= null){
+            return new ResponseEntity<>(whiskyRepository.findByAgeAndDistilleryName(age, distilleryName), HttpStatus.OK);
+        }
+        if(distilleryRegion !=  null) {
+            return new ResponseEntity<>(whiskyRepository.findByDistilleryRegion(distilleryRegion), HttpStatus.OK);
         }
         return new ResponseEntity<>(whiskyRepository.findAll(), HttpStatus.OK);
     }
 
-    // http://localhost:8080/whisky1?age=1&distillery=Talisker
-
-    @GetMapping(value = "/whisky1")
-    public ResponseEntity<List<Whisky>> findWhiskeyByAgeAndDistilleryName(
-            @RequestParam Integer age, @RequestParam String distillery){
-        return new ResponseEntity<>(whiskyRepository.findByAgeAndDistilleryName(age, distillery), HttpStatus.OK);
-    }
-
-    //http://localhost:8080/whisky2?distillery=Highland
-
-    @GetMapping(value = "/whisky2")
-    public ResponseEntity<List<Whisky>> findWhiskiesFromAParticularRegion(
-            @RequestParam String distillery){
-        return new ResponseEntity<>(whiskyRepository.findByDistilleryRegion(distillery), HttpStatus.OK);
-    }
+//    @GetMapping(value = "/whisky")
+//    public ResponseEntity<List<Whisky>> findThatHaveAParticularYear(
+//            @RequestParam(name="year",required = false) Integer year){
+//        if(year!= null) {
+//            return new ResponseEntity<>(whiskyRepository.findByYear(year), HttpStatus.OK);
+//        }
+//        return new ResponseEntity<>(whiskyRepository.findAll(), HttpStatus.OK);
+//    }
+//
+//    // http://localhost:8080/whisky1?age=1&distillery=Talisker
+//
+//    @GetMapping(value = "/whisky1")
+//    public ResponseEntity<List<Whisky>> findWhiskeyByAgeAndDistilleryName(
+//            @RequestParam(name="age",required = false) Integer age,
+//            @RequestParam(name="distilleryName",required = false) String distilleryName){
+//        return new ResponseEntity<>(whiskyRepository.findByAgeAndDistilleryName(age, distilleryName), HttpStatus.OK);
+//    }
+//
+//    //http://localhost:8080/whisky2?distillery=Highland
+//
+//    @GetMapping(value = "/whisky2")
+//    public ResponseEntity<List<Whisky>> findWhiskiesFromAParticularRegion(
+//            @RequestParam (name="distilleryRegion",required = false) String distilleryRegion){
+//        return new ResponseEntity<>(whiskyRepository.findByDistilleryRegion(distilleryRegion), HttpStatus.OK);
+//    }
 
 
 }
